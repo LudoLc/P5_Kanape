@@ -87,8 +87,8 @@ function savingShop(product) {
         name: product.name
     }
     
-let panier = localStorage.getItem('panier');
-if(!panier) {
+    let panier = localStorage.getItem('panier');
+    if(!panier) {
     panier = [productCart];
     } else {
             panier = JSON.parse(panier)
