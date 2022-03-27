@@ -38,8 +38,14 @@ for(let product of productsOfPanier) {
     let quantityField = document.querySelector('.itemQuantity');
     quantityField.addEventListener('change', event => {
         updateProductQuantity(event.target)
-        cartPrice(showProduct)
+        window.location.reload()
     })
+    let deleteButton = document.querySelector('.deleteItem');
+    deleteButton.addEventListener("click", (event) => {
+        deleteProduct(event.target)
+        window.location.reload()
+    })
+    
     return showProduct;
 })
 .catch(error => alert("Erreur : " + error));
@@ -119,12 +125,27 @@ function cartItemContentSetting(showProduct) {
     return div1;
 }
 
+function deleteProduct(input) {
+    const article = input.parentNode.parentNode.parentNode.parentNode;
+    const productName = article.querySelector('.cart__item__content__description h2').textContent;
+    const productColor = article.querySelector('.cart__item__content__description p').textContent;
+    // const deleteProduct = productsOfPanier.findIndex(prod => {
+    //     return prod.name === productName && prod.color === productColor
+    // });
+
+
+    savingShop(productsOfPanier);  // sauvegarde le panier supprimé 
+    console.log(article, productName, productColor);
+}
+
+
 function cartPrice(showProduct) {
+    let price = 0;
     const quantityArticle = document.getElementById('totalQuantity');
-    let quantity = Number(quantityArticle.innerText) + showProduct.quantity;
+    let quantity = Number(quantityArticle.innerText) + Number(showProduct.quantity);
     quantityArticle.innerText = quantity;
     const priceArticle = document.getElementById('totalPrice');
-    let price = Number(priceArticle.innerText) + (showProduct.price * showProduct.quantity);
+    price = Number(priceArticle.innerText) + Number(showProduct.price * showProduct.quantity);
     priceArticle.innerText = price;
 }
 
@@ -138,5 +159,6 @@ function updateProductQuantity(input) {
     }); // cherche le nom du premier article.
     productsOfPanier[itempUpdated].quantity = input.value;
     savingShop(productsOfPanier);
+    
 }
 
