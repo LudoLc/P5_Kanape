@@ -40,11 +40,6 @@ for(let product of productsOfPanier) {
         updateProductQuantity(event.target)
         window.location.reload()
     })
-    let deleteButton = document.querySelector('.deleteItem');
-    deleteButton.addEventListener("click", (event) => {
-        deleteProduct(event.target)
-        window.location.reload()
-    })
     
     return showProduct;
 })
@@ -122,20 +117,21 @@ function cartItemContentSetting(showProduct) {
     pDelete.classList.add('deleteItem');
     pDelete.textContent = 'Supprimer';
     div3.appendChild(pDelete);
+    pDelete.addEventListener("click", () => {
+        deleteProduct(showProduct)
+    })
     return div1;
 }
 
-function deleteProduct(input) {
-    const article = input.parentNode.parentNode.parentNode.parentNode;
-    const productName = article.querySelector('.cart__item__content__description h2').textContent;
-    const productColor = article.querySelector('.cart__item__content__description p').textContent;
-    // const deleteProduct = productsOfPanier.findIndex(prod => {
-    //     return prod.name === productName && prod.color === productColor
-    // });
-
-
+function deleteProduct(product) {
+    const productToDelete = productsOfPanier.findIndex(panierProduct => {
+        if(product.id === panierProduct.id && product.color === panierProduct.color){
+            return true;
+        }
+    });
+    productsOfPanier.splice(productToDelete, 1);
     savingShop(productsOfPanier);  // sauvegarde le panier supprimé 
-    console.log(article, productName, productColor);
+    window.location.reload()
 }
 
 
@@ -162,3 +158,30 @@ function updateProductQuantity(input) {
     
 }
 
+// ******************************** Fetch Formulaire ****************************
+function getrequestForm () {
+    const formulaire = document.getElementsByClassName('cart__order__form');
+    const firstName = formulaire.elements.firstName.value; // recuperation value de l'element first name
+    const lastName = formulaire.elements.lastName.value;
+    const email = formulaire.elements.email.value;
+    const city = formulaire.elements.city.value;
+    const adress = formulaire.elements.adress.value;
+    
+    // stockage dans un objet 
+    const body = {
+        contact : {
+            firstName: firstName,
+            lastName: lastName,
+            adress: adress,
+            city: city,
+            email: email
+        },
+        products : result
+    }
+    const result = [];
+    for(let product of productsOfPanier) {
+        const id = product.id;
+        result.push(id);
+    }
+    return body;
+}
