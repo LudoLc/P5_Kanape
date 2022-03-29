@@ -18,32 +18,32 @@ const productsOfPanier = getShop();
 
 for(let product of productsOfPanier) {
     fetch(`http://localhost:3000/api/products/${product.id}`)
-.then(response => response.json())
-.then(data  => {
-    const showProduct = {
-        // données LS 
-        id: product.id,
-        quantity: product.quantity,
-        color: product.color,
-        name: product.name,
-        // données manquantes à afficher :
-        price: data.price,
-        altTxt: data.altTxt,
-        description: data.description,
-        imageUrl: data.imageUrl
-    }
-    //console.log(showProduct);
-    showPanierToDom(showProduct);
-    cartPrice(showProduct);
-    let quantityField = document.querySelector('.itemQuantity');
-    quantityField.addEventListener('change', event => {
-        updateProductQuantity(event.target)
-        window.location.reload()
+    .then(response => response.json())
+    .then(data  => {
+        const showProduct = {
+            // données LS 
+            id: product.id,
+            quantity: product.quantity,
+            color: product.color,
+            name: product.name,
+            // données manquantes à afficher :
+            price: data.price,
+            altTxt: data.altTxt,
+            description: data.description,
+            imageUrl: data.imageUrl
+        }
+        //console.log(showProduct);
+        showPanierToDom(showProduct);
+        cartPrice(showProduct);
+        let quantityField = document.querySelector('.itemQuantity');
+        quantityField.addEventListener('change', event => {
+            updateProductQuantity(event.target)
+            window.location.reload()
+        })
+        
+        return showProduct;
     })
-    
-    return showProduct;
-})
-.catch(error => alert("Erreur : " + error));
+    .catch(error => alert("Erreur : " + error));
 }
 
 function showPanierToDom(showProduct) {
@@ -159,29 +159,105 @@ function updateProductQuantity(input) {
 }
 
 // ******************************** Fetch Formulaire ****************************
-function getrequestForm () {
+const nameRegex = /[a-z '\-àèìòùáéíóúýâêîôûãñõäëïöüÿçøåæœ]+/i;
+const cityRegex = /[a-z\-àèìòùáéíóúýâêîôûãñõäëïöüÿçøåæœ .']+/i;
+const addressRegex = /[a-z0-9àèìòùáéíóúýâêîôûãñõäëïöüÿçøåæœ \-',.]+/i;
+const emailRegex = /.+\@.+\..+/;
+function getRequestForm () {
     const formulaire = document.getElementsByClassName('cart__order__form');
-    const firstName = formulaire.elements.firstName.value; // recuperation value de l'element first name
-    const lastName = formulaire.elements.lastName.value;
-    const email = formulaire.elements.email.value;
-    const city = formulaire.elements.city.value;
-    const adress = formulaire.elements.adress.value;
-    
+    const firstName = document.getElementById('firstName').value; // recuperation value de l'element first name
+    const lastName = document.getElementById('lastName').value;
+    const email = document.getElementById('email').value;
+    const city = document.getElementById('city').value;
+    const address = document.getElementById('address').value;
+    console.log(nameRegex.test(firstName));
     // stockage dans un objet 
-    const body = {
-        contact : {
-            firstName: firstName,
-            lastName: lastName,
-            adress: adress,
-            city: city,
-            email: email
-        },
-        products : result
-    }
     const result = [];
     for(let product of productsOfPanier) {
         const id = product.id;
         result.push(id);
     }
+    const body = {
+        contact : {
+            firstName,
+            lastName,
+            address,
+            city,
+            email
+        },
+        products : result
+    }
     return body;
 }
+
+// Bouton commande 
+
+const submitButton = document.getElementById('order');
+submitButton.addEventListener("click", (event) => submit(event));
+
+
+
+function formuValidation() {
+    let valid = true;
+    if (document.getElementById('firstName').value == "" || !nameRegex.test(document.getElementById('firstName').value)){
+        document.getElementById('firstNameErrorMsg').innerText = "Veuillez entrer votre prénom!";
+        valid = false;
+    } else {
+        document.getElementById('firstNameErrorMsg').innerText = "";
+    }
+    if (document.getElementById('lastName').value == "" || !nameRegex.test(document.getElementById('lastName').value)){
+        document.getElementById('lastNameErrorMsg').innerText = "Veuillez entrer votre nom!";
+        valid = false;
+    } else {
+        document.getElementById('lastNameErrorMsg').innerText = "";
+    }
+    if (document.getElementById('address').value == "" || !addressRegex.test(document.getElementById('address').value)){
+        document.getElementById('addressErrorMsg').innerText = "Veuillez entrer votre addresse!";
+        valid = false;
+    } else {
+        document.getElementById('addressErrorMsg').innerText = "";
+    }
+    if (document.getElementById('city').value == "" || !cityRegex.test(document.getElementById('city').value)){
+        document.getElementById('cityErrorMsg').innerText = "Veuillez entrer votre ville!";
+        valid = false;
+    } else {
+        document.getElementById('cityErrorMsg').innerText = "";
+    }
+    if (document.getElementById('email').value == "" || !emailRegex.test(document.getElementById('email').value)){
+        document.getElementById('emailErrorMsg').innerText = "Veuillez entrer votre email! sous format : xx@xx.xx";
+        valid = false;
+    } else {
+        document.getElementById('cityErrorMsg').innerText = "";
+    }
+    return valid;
+}
+
+
+function submit (event) {
+    event.preventDefault();
+    // console.log(document.getElementById('firstName').value);
+    // console.log(document.getElementById('lastName').value);
+    // console.log(document.getElementById('city').value);
+    // console.log(document.getElementById('address').value);
+    // console.log(document.getElementById('email').value);
+    const body = getRequestForm();
+    console.log(body);
+    if (formuValidation()){
+        fetch('http://localhost:3000/api/products/order', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',  //definit le format en Json
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    })
+    .then(response => response.json())
+    .then(data  => {
+        console.log(data);
+        window.location.replace(`./confirmation.html?orderId=${data.orderId}`);
+    })
+    .catch(error => alert("Erreur : " + error));
+};   
+}
+
+
