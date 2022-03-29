@@ -26,7 +26,7 @@ fetch(url)
         article.appendChild(p); // dom p a article 
         console.log(article);
     })
-
+    
 })
 .catch(error => alert("Erreur : " + error));
 

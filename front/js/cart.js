@@ -65,7 +65,7 @@ function showPanierToDom(showProduct) {
 
 
 function imgCartItem(showProduct) {
-    const div = document.createElement('div');
+    const div = document.createElement('div'); //creat div la div parent 
     div.classList.add("cart__item__img");
     const imgSrc = document.createElement('img');
     imgSrc.src = showProduct.imageUrl;
@@ -93,7 +93,7 @@ function cartItemContent(showProduct) {
 }
 
 function cartItemContentSetting(showProduct) {
-    const div1 = document.createElement('div');
+    const div1 = document.createElement('div'); //crea main div 
     div1.classList.add('cart__item__content__settings');
     const div2 = document.createElement('div');
     div2.classList.add('cart__item__content__settings__quantity');
@@ -102,7 +102,6 @@ function cartItemContentSetting(showProduct) {
     div2.appendChild(p);
     div1.appendChild(div2);
     const input = document.createElement('input');
-    //input.addEventListener("click", updateProductQuantity);
     input.type = "number";
     input.classList = "itemQuantity";
     input.name ="itemQuantity";
@@ -195,8 +194,6 @@ function getRequestForm () {
 const submitButton = document.getElementById('order');
 submitButton.addEventListener("click", (event) => submit(event));
 
-
-
 function formuValidation() {
     let valid = true;
     if (document.getElementById('firstName').value == "" || !nameRegex.test(document.getElementById('firstName').value)){
@@ -235,11 +232,6 @@ function formuValidation() {
 
 function submit (event) {
     event.preventDefault();
-    // console.log(document.getElementById('firstName').value);
-    // console.log(document.getElementById('lastName').value);
-    // console.log(document.getElementById('city').value);
-    // console.log(document.getElementById('address').value);
-    // console.log(document.getElementById('email').value);
     const body = getRequestForm();
     console.log(body);
     if (formuValidation()){
