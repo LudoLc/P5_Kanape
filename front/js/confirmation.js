@@ -9,8 +9,6 @@ const urlParms = new URLSearchParams(queryString);
 return urlParms.get('orderId');
 }
 
-//console.log(orderId);
-
 function showOrderId(orderId) {
     const orderIdshow = document.getElementById('orderId');
     orderIdshow.textContent = orderId;

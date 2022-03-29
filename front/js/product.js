@@ -54,7 +54,7 @@ function textDesc (product) {
 // ecouter le click et return true ou false
 function eventButton(product) {
     const button = document.getElementById('addToCart');
-    if(button) {
+    if(button) { // verifie que le boutton existe
         button.addEventListener("click", (event) => {
             event.preventDefault();
             const quantity = document.getElementById('quantity').value;

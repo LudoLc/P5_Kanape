@@ -5,8 +5,15 @@ const url = 'http://localhost:3000/api/products';
 fetch(url)
 .then(response => response.json())
 .then(response => {
-    response.forEach(function getKanap(canape){
-        const parent = document.getElementById('items'); 
+    response.forEach(canape  => {
+        displayProduct(canape)
+    }) 
+})
+.catch(error => alert("Erreur : " + error));
+
+
+function displayProduct (canape) {
+    const parent = document.getElementById('items'); 
         const link = document.createElement('a'); // creation balise a
         link.setAttribute('href', './product.html?id=' + canape._id); // attribut href avec lien du produit + id du produit en specifique
         parent.appendChild(link);  // methode DOM pour donner a link le parent "paren"
@@ -24,10 +31,4 @@ fetch(url)
         article.appendChild(img);  // dom img a article 
         article.appendChild(h3); // dom h3 a article 
         article.appendChild(p); // dom p a article 
-        console.log(article);
-    })
-    
-})
-.catch(error => alert("Erreur : " + error));
-
-
+}
