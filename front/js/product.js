@@ -59,9 +59,6 @@ function eventButton(product) {
             event.preventDefault();
             const quantity = document.getElementById('quantity').value;
             const color = document.getElementById('colors').value;
-            //console.log(event);
-            // console.log(color);
-            // console.log(quantity);
             if(color == '' || color == null || quantity == '' || quantity < 1 || quantity > 100) {
                 alert("Veuillez selectionner un produit ainsi qu'une couleur SVP ! ")
             } else {
@@ -109,12 +106,11 @@ function savingShop(product) {
             const index = panier.findIndex(function (i) { //cherche l'index du produit dans le panier
                 return i.name == productCart.name;
             });
-            panier[index].quantity += parseInt(quantity)
+            panier[index].quantity += parseInt(quantity) // rendre le resultat sous format de nombre avec "parse"
         } else {
             panier.push(productCart)
         }
     }
-    
-    localStorage.setItem('panier', JSON.stringify(panier));
+    localStorage.setItem('panier', JSON.stringify(panier)); // rendre au format Json le panier 
 }
 

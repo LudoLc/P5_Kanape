@@ -3,7 +3,7 @@ function getShop() {
     const getItemCart =  localStorage.getItem('panier'); 
     console.log(getItemCart);
     if (!getItemCart) { 
-        return []; //return tableau (si carte n'existe pas)
+        return []; //return tableau vide (si carte n'existe pas)
     }
     const getItemCart_json = JSON.parse(getItemCart); // prend une chaîne JSON puis la transforme en objet JavaScript. */
     return getItemCart_json;
@@ -21,7 +21,7 @@ for(let product of productsOfPanier) {
     .then(response => response.json())
     .then(data  => {
         const showProduct = {
-            // données LS 
+            // données Ldu local storage 
             id: product.id,
             quantity: product.quantity,
             color: product.color,
@@ -32,7 +32,6 @@ for(let product of productsOfPanier) {
             description: data.description,
             imageUrl: data.imageUrl
         }
-        //console.log(showProduct);
         showPanierToDom(showProduct);
         cartPrice(showProduct);
         let quantityField = document.querySelector('.itemQuantity');
@@ -47,13 +46,12 @@ for(let product of productsOfPanier) {
 }
 
 function showPanierToDom(showProduct) {
-    // article 
     const parent = document.getElementById("cart__items"); // crea cart__item
     const article = document.createElement('article');
-    article.classList.add("cart__item");
+    article.classList.add("cart__item"); // creation d'une liste de class
     article.dataset.id = showProduct.id;
     article.dataset.color = showProduct.color;
-    parent.appendChild(article);
+    parent.appendChild(article); 
     const imgDiv = imgCartItem(showProduct);
     article.appendChild(imgDiv);
     const divDescription = cartItemContent(showProduct);
@@ -71,7 +69,7 @@ function imgCartItem(showProduct) {
     imgSrc.src = showProduct.imageUrl;
     imgSrc.alt = showProduct.altTxt;
     div.appendChild(imgSrc);
-    return div;
+    return div; // return pour afficher le resultat 
 }
 
 function cartItemContent(showProduct) {
@@ -116,7 +114,7 @@ function cartItemContentSetting(showProduct) {
     pDelete.classList.add('deleteItem');
     pDelete.textContent = 'Supprimer';
     div3.appendChild(pDelete);
-    pDelete.addEventListener("click", () => {
+    pDelete.addEventListener("click", () => { // add event listener qui ecoute au click
         deleteProduct(showProduct)
     })
     return div1;
@@ -145,7 +143,6 @@ function cartPrice(showProduct) {
 }
 
 function updateProductQuantity(input) {
-    //const input = event.target;
     const article = input.parentNode.parentNode.parentNode.parentNode;
     const productName = article.querySelector('.cart__item__content__description h2').textContent;
     const productColor = article.querySelector('.cart__item__content__description p').textContent;
@@ -221,7 +218,7 @@ function formuValidation() {
         document.getElementById('cityErrorMsg').innerText = "";
     }
     if (document.getElementById('email').value == "" || !emailRegex.test(document.getElementById('email').value)){
-        document.getElementById('emailErrorMsg').innerText = "Veuillez entrer votre email! sous format : xx@xx.xx";
+        document.getElementById('emailErrorMsg').innerText = "Veuillez entrer votre email! sous format : xxx@xx.xx";
         valid = false;
     } else {
         document.getElementById('cityErrorMsg').innerText = "";
