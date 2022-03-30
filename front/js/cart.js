@@ -60,27 +60,27 @@ function showPanierToDom(showProduct) {
   divDescription.appendChild(divSettings);
 }
 
-function addImg(showProduct) {
+function addImg(imgCanape) {
   const div = document.createElement("div"); //creat div la div parent
   div.classList.add("cart__item__img");
   const imgSrc = document.createElement("img");
-  imgSrc.src = showProduct.imageUrl;
-  imgSrc.alt = showProduct.altTxt;
+  imgSrc.src = imgCanape.imageUrl;
+  imgSrc.alt = imgCanape.altTxt;
   div.appendChild(imgSrc);
   return div; // return pour afficher le resultat
 }
 
-function showItemContent(showProduct) {
+function showItemContent(item) {
   const div1 = document.createElement("div"); // main div
   div1.classList.add("cart__item__content");
   const div2 = document.createElement("div"); // div description
   div2.classList.add("cart__item__content__description");
   const h2 = document.createElement("h2");
-  h2.textContent = showProduct.name;
+  h2.textContent = item.name;
   const pColor = document.createElement("p");
-  pColor.textContent = showProduct.color;
+  pColor.textContent = item.color;
   const pPrice = document.createElement("p");
-  pPrice.textContent = showProduct.price + "€";
+  pPrice.textContent = item.price + "€";
   div1.appendChild(div2);
   div2.appendChild(h2);
   div2.appendChild(pColor);
@@ -88,7 +88,7 @@ function showItemContent(showProduct) {
   return div1;
 }
 
-function addItemDescription(showProduct) {
+function addItemDescription(item) {
   const div1 = document.createElement("div"); //crea main div
   div1.classList.add("cart__item__content__settings");
   const div2 = document.createElement("div");
@@ -103,7 +103,7 @@ function addItemDescription(showProduct) {
   input.name = "itemQuantity";
   input.min = "1";
   input.max = "100";
-  input.setAttribute("value", showProduct.quantity);
+  input.setAttribute("value", item.quantity);
   div2.appendChild(input);
   const div3 = document.createElement("div");
   div3.classList.add("cart__item__content__settings__delete");
@@ -114,7 +114,7 @@ function addItemDescription(showProduct) {
   div3.appendChild(pDelete);
   pDelete.addEventListener("click", () => {
     // add event listener qui ecoute au click
-    deleteProduct(showProduct);
+    deleteProduct(item);
   });
   return div1;
 }
@@ -133,16 +133,16 @@ function deleteProduct(product) {
   window.location.reload();
 }
 
-function showCartPrice(showProduct) {
+function showCartPrice(data) {
   let price = 0;
   const quantityArticle = document.getElementById("totalQuantity");
   let quantity =
-    Number(quantityArticle.innerText) + Number(showProduct.quantity);
+    Number(quantityArticle.innerText) + Number(data.quantity);
   quantityArticle.innerText = quantity;
   const priceArticle = document.getElementById("totalPrice");
   price =
     Number(priceArticle.innerText) +
-    Number(showProduct.price * showProduct.quantity);
+    Number(data.price * data.quantity);
   priceArticle.innerText = price;
 }
 

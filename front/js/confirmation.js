@@ -9,9 +9,9 @@ const urlParms = new URLSearchParams(queryString);
 return urlParms.get('orderId');
 }
 
-function showOrderId(orderId) {
+function showOrderId(value) {
     const orderIdshow = document.getElementById('orderId');
-    orderIdshow.textContent = orderId;
+    orderIdshow.textContent = value;
 }
 
 // eviter d'avoir le clear cache rempli et le vider .
