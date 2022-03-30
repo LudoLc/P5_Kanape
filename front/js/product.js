@@ -8,10 +8,10 @@ fetch(urlProduct)
 .then(response => response.json())
 .then(product => {
     
-    canapePicture(product);
-    titlePrice(product);
-    priceProduct(product);
-    textDesc(product);
+    createCanapeImg(product);
+    showTitlePrice(product);
+    showPriceProduct(product);
+    showTextDescription(product);
     const select = document.getElementById('colors');
     
     product.colors.forEach((color) => { 
@@ -23,7 +23,7 @@ fetch(urlProduct)
     eventButton(product);
 })
 
-function canapePicture(product) {
+function createCanapeImg(product) {
     const parent = document.getElementsByClassName('item__img')[0];
     const imgProduct = document.createElement('img');
     imgProduct.setAttribute('src', product.imageUrl);
@@ -32,22 +32,22 @@ function canapePicture(product) {
     parent.appendChild(imgProduct);
 }
 
-function titlePrice(product) {
+function showTitlePrice(product) {
     console.log(product);
-    const parentTitlePrice = document.getElementsByClassName('item__content__titlePrice');
+    const parentshowTitlePrice = document.getElementsByClassName('item__content__showTitlePrice');
     const productTitle = document.getElementById('title');
     productTitle.innerText = product.name;
     console.log(productTitle);
 }
 
-function priceProduct (product) {
+function showPriceProduct (product) {
     const price = document.getElementById('price');
     price.innerText = product.price;
 }
 
-function textDesc (product) {
-    const textDescription = document.getElementById('description');
-    textDescription.innerText = product.description;
+function showTextDescription (product) {
+    const showTextDescriptionription = document.getElementById('description');
+    showTextDescriptionription.innerText = product.description;
 }
 
 

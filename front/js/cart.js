@@ -33,7 +33,7 @@ for (let product of productsOfPanier) {
         imageUrl: data.imageUrl,
       };
       showPanierToDom(showProduct);
-      cartPrice(showProduct);
+      showCartPrice(showProduct);
       let quantityField = document.querySelector(".itemQuantity");
       quantityField.addEventListener("change", (event) => {
         updateProductQuantity(event.target);
@@ -52,15 +52,15 @@ function showPanierToDom(showProduct) {
   article.dataset.id = showProduct.id;
   article.dataset.color = showProduct.color;
   parent.appendChild(article);
-  const imgDiv = imgCartItem(showProduct);
+  const imgDiv = addImg(showProduct);
   article.appendChild(imgDiv);
-  const divDescription = cartItemContent(showProduct);
+  const divDescription = showItemContent(showProduct);
   article.appendChild(divDescription);
-  const divSettings = cartItemContentSetting(showProduct);
+  const divSettings = addItemDescription(showProduct);
   divDescription.appendChild(divSettings);
 }
 
-function imgCartItem(showProduct) {
+function addImg(showProduct) {
   const div = document.createElement("div"); //creat div la div parent
   div.classList.add("cart__item__img");
   const imgSrc = document.createElement("img");
@@ -70,7 +70,7 @@ function imgCartItem(showProduct) {
   return div; // return pour afficher le resultat
 }
 
-function cartItemContent(showProduct) {
+function showItemContent(showProduct) {
   const div1 = document.createElement("div"); // main div
   div1.classList.add("cart__item__content");
   const div2 = document.createElement("div"); // div description
@@ -88,7 +88,7 @@ function cartItemContent(showProduct) {
   return div1;
 }
 
-function cartItemContentSetting(showProduct) {
+function addItemDescription(showProduct) {
   const div1 = document.createElement("div"); //crea main div
   div1.classList.add("cart__item__content__settings");
   const div2 = document.createElement("div");
@@ -133,7 +133,7 @@ function deleteProduct(product) {
   window.location.reload();
 }
 
-function cartPrice(showProduct) {
+function showCartPrice(showProduct) {
   let price = 0;
   const quantityArticle = document.getElementById("totalQuantity");
   let quantity =
@@ -198,9 +198,10 @@ function getRequestForm() {
 const submitButton = document.getElementById("order");
 submitButton.addEventListener("click", (event) => {
   const panier = getShop();
-  if (panier == [] || !panier) {
+  if (panier.length ==0) {
     alert("Votre panier est vide!");
     console.log("test1");
+    return
   } else {
     submit(event);
   }
