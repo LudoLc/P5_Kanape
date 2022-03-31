@@ -13,7 +13,7 @@ fetch(url)
 //--------------------------
 
 
-//Affiche les produits au DOM 
+//----------------------------- fonction qui Affiche les produits au DOM 
 function displayProduct (canape) {
     const parent = document.getElementById('items'); 
         const link = document.createElement('a'); // creation balise a
@@ -34,5 +34,4 @@ function displayProduct (canape) {
         article.appendChild(h3); // dom h3 a article 
         article.appendChild(p); // dom p a article 
 }
-
 //------------------------------

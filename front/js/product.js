@@ -4,6 +4,7 @@ const urlParams = new URLSearchParams(myNewId);
 const productId = urlParams.get("id");
 const urlProduct = `http://localhost:3000/api/products/${productId}`;
 
+//--------------------- fonction fetch qui recupere les articles de l'API 
 fetch(urlProduct)
 .then(response => response.json())
 .then(product => {
@@ -22,36 +23,43 @@ fetch(urlProduct)
     })
     eventButton(product);
 })
+//--------------------------------
 
+//---------------------------- fonction pour creer les images des differents canapes
 function createCanapeImg(product) {
     const parent = document.getElementsByClassName('item__img')[0];
     const imgProduct = document.createElement('img');
     imgProduct.setAttribute('src', product.imageUrl);
     imgProduct.setAttribute('alt', "Photographie d'un canapé");
-    console.log(parent);
     parent.appendChild(imgProduct);
 }
+//-----------------------------
 
+//---------------------------- fonction qui creer et permet d'afficher le nom des canapes
 function showTitlePrice(product) {
-    console.log(product);
-    const parentshowTitlePrice = document.getElementsByClassName('item__content__showTitlePrice');
+    //console.log(product);
+    //const parentShowTitlePrice = document.getElementsByClassName('item__content__showTitlePrice');
+    //console.log(parentShowTitlePrice);
     const productTitle = document.getElementById('title');
     productTitle.innerText = product.name;
-    console.log(productTitle);
 }
+//----------------------------
 
+//--------------------------- fonction qui permet de créer et d'afficher les prixs des differents produits
 function showPriceProduct (product) {
     const price = document.getElementById('price');
     price.innerText = product.price;
 }
+//----------------------------
 
+//-------------------------- fonction qui permet de créer et d'afficher les text description
 function showTextDescription (product) {
     const showTextDescriptionription = document.getElementById('description');
     showTextDescriptionription.innerText = product.description;
 }
 
 
-// ecouter le click et return true ou false
+//-------------------------- fonction pour  ecouter le click et return true ou false
 function eventButton(product) {
     const button = document.getElementById('addToCart');
     if(button) { // verifie que le boutton existe
@@ -80,15 +88,15 @@ function ifExist(array, value) {
     }
     return false
 };
+//------------------------------
 
 
-// enregistrer le panier 
 
+//----------------------------- fonction qui enregistre le panier 
 function savingShop(product) {
     // stockage : id / couleur / quantité
     const quantity = document.getElementById('quantity').value;
     const color = document.getElementById('colors').value;
-    console.log(product._id);
     const productCart = {
         id: product._id,
         quantity: parseInt(quantity),
@@ -113,4 +121,4 @@ function savingShop(product) {
     }
     localStorage.setItem('panier', JSON.stringify(panier)); // rendre au format Json le panier 
 }
-
+//----------------------------------

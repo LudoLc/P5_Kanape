@@ -16,6 +16,7 @@ function savingShop(panier) {
 //----------------------------------------------------------------------------------
 const productsOfPanier = getShop();
 
+//-------------------------------------------------- foncion fetch 
 for (let product of productsOfPanier) {
     fetch(`http://localhost:3000/api/products/${product.id}`)
     .then((response) => response.json())
@@ -44,7 +45,9 @@ for (let product of productsOfPanier) {
     })
     .catch((error) => alert("Erreur : " + error));
 }
+//--------------------------------------------------------
 
+//------------------------------- fonction pour afficher le produit 
 function showPanierToDom(showProduct) {
     const parent = document.getElementById("cart__items"); // crea cart__item
     const article = document.createElement("article");
@@ -59,8 +62,10 @@ function showPanierToDom(showProduct) {
     const divSettings = addItemDescription(showProduct);
     divDescription.appendChild(divSettings);
 }
+//--------------------------------------
 
-function addImg(imgCanape) {
+//----------------------------- fonction pour afficher l'image des divers canapés 
+function addImg(imgCanape) { 
     const div = document.createElement("div"); //creat div la div parent
     div.classList.add("cart__item__img");
     const imgSrc = document.createElement("img");
@@ -69,7 +74,9 @@ function addImg(imgCanape) {
     div.appendChild(imgSrc);
     return div; // return pour afficher le resultat
 }
+//------------------------------
 
+//----------------------------fonction pour afficher le nom du produit + couleur + la couleur 
 function showItemContent(item) {
     const div1 = document.createElement("div"); // main div
     div1.classList.add("cart__item__content");
@@ -87,7 +94,9 @@ function showItemContent(item) {
     div2.appendChild(pPrice);
     return div1;
 }
+//------------------------------
 
+//---------------------------- fonction pour ajouter le bouton supprimer avec le bon parametrage
 function addItemDescription(item) {
     const div1 = document.createElement("div"); //crea main div
     div1.classList.add("cart__item__content__settings");
@@ -118,7 +127,9 @@ function addItemDescription(item) {
 });
 return div1;
 }
+//--------------------------------------
 
+//-------------------------------- fonction permettant la suppression d'articles 
 function deleteProduct(product) {
     const productToDelete = productsOfPanier.findIndex((panierProduct) => {
         if (
@@ -132,7 +143,10 @@ productsOfPanier.splice(productToDelete, 1);
 savingShop(productsOfPanier); // sauvegarde le panier supprimé
 window.location.reload();
 }
+//-----------------------------
 
+
+//----------------------- fonction permettant  d'afficher le prix en fonction du nombre d'articles
 function showCartPrice(data) {
 let price = 0;
     const quantityArticle = document.getElementById("totalQuantity");
@@ -145,7 +159,9 @@ let price = 0;
         Number(data.price * data.quantity);
         priceArticle.innerText = price;
 }
+//---------------------------------
 
+//----------------------- fonction qui affiche les prix/ quantitté si modifications il y'a 
 function updateProductQuantity(input) {
     const article = input.parentNode.parentNode.parentNode.parentNode;
     const productName = article.querySelector(
@@ -160,7 +176,9 @@ function updateProductQuantity(input) {
     }); // cherche le nom du premier article.
     productsOfPanier[itempUpdated].quantity = input.value;
     savingShop(productsOfPanier);
+    //console.log(updateProductQuantity);
 }
+//----------------------------------------
 
 // ******************************** Fetch Formulaire ****************************
 const nameRegex = /[a-z '\-àèìòùáéíóúýâêîôûãñõäëïöüÿçøåæœ]+/i;
@@ -200,13 +218,14 @@ submitButton.addEventListener("click", (event) => {
 const panier = getShop();
 if (panier.length ==0) {
     alert("Votre panier est vide!");
-    console.log("test1");
     return
 } else {
     submit(event);
 }
 });
 
+
+//------------------------fonction de condition de validation du remplissage des differents champs du formulaire  
 function formuValidation() {
     let valid = true;
     if (
@@ -261,7 +280,9 @@ function formuValidation() {
     }
 return valid;
 }
+//---------------------------------------------
 
+//------------------------------- fonction qui verifie qui si les données ont bien été saisies ==> page de confirmation
 function submit(event) {
     event.preventDefault();
     const body = getRequestForm();
@@ -282,3 +303,4 @@ function submit(event) {
         .catch((error) => alert("Erreur : " + error));
 }
 }
+//-----------------------------------
