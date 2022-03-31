@@ -4,9 +4,9 @@ showOrderId(orderId);
 clearCache();
 
 function getOrderId() { // appel de l'order ID
-const queryString = window.location.search;
-const urlParms = new URLSearchParams(queryString);
-return urlParms.get('orderId');
+    const queryString = window.location.search;
+    const urlParms = new URLSearchParams(queryString);
+    return urlParms.get('orderId');
 }
 
 function showOrderId(value) {

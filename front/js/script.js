@@ -1,7 +1,7 @@
+// *************************************INDEX.HTML******************************/
 const url = 'http://localhost:3000/api/products';
 
-
-// *************************************INDEX******************************/
+// fetch recuperation des données.
 fetch(url)
 .then(response => response.json())
 .then(response => {
@@ -10,8 +10,10 @@ fetch(url)
     }) 
 })
 .catch(error => alert("Erreur : " + error));
+//--------------------------
 
 
+//Affiche les produits au DOM 
 function displayProduct (canape) {
     const parent = document.getElementById('items'); 
         const link = document.createElement('a'); // creation balise a
@@ -32,3 +34,5 @@ function displayProduct (canape) {
         article.appendChild(h3); // dom h3 a article 
         article.appendChild(p); // dom p a article 
 }
+
+//------------------------------
