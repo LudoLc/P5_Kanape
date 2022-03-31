@@ -6,22 +6,22 @@ const urlProduct = `http://localhost:3000/api/products/${productId}`;
 
 //--------------------- fonction fetch qui recupere les articles de l'API 
 fetch(urlProduct)
-.then(response => response.json())
-.then(product => {
-    
-    createCanapeImg(product);
-    showTitlePrice(product);
-    showPriceProduct(product);
-    showTextDescription(product);
-    const select = document.getElementById('colors');
-    
-    product.colors.forEach((color) => { 
-        const optionsColor = document.createElement('option');
-        optionsColor.value = color;
-        optionsColor.textContent = color;
-        select.appendChild(optionsColor);
-    })
-    eventButton(product);
+    .then(response => response.json())
+    .then(product => {
+        
+        createCanapeImg(product);
+        showTitlePrice(product);
+        showPriceProduct(product);
+        showTextDescription(product);
+        const select = document.getElementById('colors');
+        
+        product.colors.forEach((color) => { 
+            const optionsColor = document.createElement('option');
+            optionsColor.value = color;
+            optionsColor.textContent = color;
+            select.appendChild(optionsColor);
+        })
+        eventButton(product);
 })
 //--------------------------------
 
@@ -37,9 +37,6 @@ function createCanapeImg(product) {
 
 //---------------------------- fonction qui creer et permet d'afficher le nom des canapes
 function showTitlePrice(product) {
-    //console.log(product);
-    //const parentShowTitlePrice = document.getElementsByClassName('item__content__showTitlePrice');
-    //console.log(parentShowTitlePrice);
     const productTitle = document.getElementById('title');
     productTitle.innerText = product.name;
 }
@@ -110,7 +107,6 @@ function savingShop(product) {
     } else {
         panier = JSON.parse(panier)
         if(ifExist(panier, productCart)){
-            console.log('test')
             const index = panier.findIndex(function (i) { //cherche l'index du produit dans le panier
                 return i.name == productCart.name;
             });

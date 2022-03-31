@@ -24,6 +24,5 @@ function showOrderId(value) {
 function clearCache() {
     const cacheClear = window.localStorage;
     cacheClear.clear();
-    console.log(cacheClear);
 }
 //------------------------------

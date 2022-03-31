@@ -3,11 +3,11 @@ const url = 'http://localhost:3000/api/products';
 
 // fetch recuperation des données.
 fetch(url)
-.then(response => response.json())
-.then(response => {
-    response.forEach(canape  => {
-        displayProduct(canape)
-    }) 
+    .then(response => response.json())
+    .then(response => {
+        response.forEach(canape  => {
+            displayProduct(canape)
+        }) 
 })
 .catch(error => alert("Erreur : " + error));
 //--------------------------
