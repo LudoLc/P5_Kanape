@@ -217,7 +217,7 @@ const lastName = document.getElementById("lastName").value;
 const email = document.getElementById("email").value;
 const city = document.getElementById("city").value;
 const address = document.getElementById("address").value;
-// stockage dans un objet
+// stockage dans un objet des coordonnées de l'utilisateur
 const result = [];
 for (let product of productsOfPanier) {
     const id = product.id;
@@ -313,10 +313,10 @@ function submit(event) {
     const body = getRequestForm();
     if (formuValidation()) {
         fetch("http://localhost:3000/api/products/order", {
-        method: "POST",
-        headers: {
-            Accept: "application/json", //definit le format en Json
-            "Content-Type": "application/json",
+            method: "POST",
+            headers: {
+                Accept: "application/json", //definit le format en Json
+                "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
         })

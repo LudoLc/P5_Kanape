@@ -93,7 +93,9 @@ function ifExist(array, value) {
 function savingShop(product) {
     // stockage : id / couleur / quantité
     const quantity = document.getElementById('quantity').value;
+
     const color = document.getElementById('colors').value;
+    
     const productCart = {
         id: product._id,
         quantity: parseInt(quantity),
