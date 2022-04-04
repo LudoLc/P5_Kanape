@@ -251,60 +251,92 @@ submitButton.addEventListener("click", (event) => {
 
 
 //------------------------fonction de condition de validation du remplissage des differents champs du formulaire  
-function formuValidation() {
-    let valid = true;
-    if (
+
+function isFirstNameValid(){
+    if(
         document.getElementById("firstName").value == "" ||
         !nameRegex.test(document.getElementById("firstName").value)
-    ) {
+    ){
+        return false;
+    } return true;
+}
+
+function isLastNameValid(){
+    if(
+        document.getElementById("lastName").value == "" ||
+        !nameRegex.test(document.getElementById("lastName").value)
+    ){
+        return false;
+    } return true;
+}
+
+function isAddressValid(){
+    if(
+        document.getElementById("address").value == "" ||
+        !nameRegex.test(document.getElementById("address").value)
+    ){
+        return false;
+    } return true;
+}
+
+function isCityValid(){
+    if(
+        document.getElementById("city").value == "" ||
+        !nameRegex.test(document.getElementById("city").value)
+    ){
+        return false;
+    } return true;
+}
+
+function isEmailValid(){
+    if(
+        document.getElementById("email").value == "" ||
+        !nameRegex.test(document.getElementById("email").value)
+    ){
+        return false;
+    } return true;
+}
+
+function formuValidation() {
+let valid = true;
+    if (!isFirstNameValid()) {
         document.getElementById("firstNameErrorMsg").innerText =
         "Veuillez entrer votre prénom!";
         valid = false;
     } else {
         document.getElementById("firstNameErrorMsg").innerText = "";
     }
-    if (
-        document.getElementById("lastName").value == "" ||
-        !nameRegex.test(document.getElementById("lastName").value)
-    ) {
+    if (!isLastNameValid()) {
         document.getElementById("lastNameErrorMsg").innerText =
         "Veuillez entrer votre nom!";
         valid = false;
     } else {
         document.getElementById("lastNameErrorMsg").innerText = "";
     }
-    if (
-        document.getElementById("address").value == "" ||
-        !addressRegex.test(document.getElementById("address").value)
-    ) {
+    if (!isAddressValid()) {
         document.getElementById("addressErrorMsg").innerText =
         "Veuillez entrer votre addresse!";
         valid = false;
     } else {
         document.getElementById("addressErrorMsg").innerText = "";
     }
-    if (
-        document.getElementById("city").value == "" ||
-        !cityRegex.test(document.getElementById("city").value)
-    ) {
+    if (!isCityValid()) {
         document.getElementById("cityErrorMsg").innerText =
         "Veuillez entrer votre ville!";
         valid = false;
     } else {
         document.getElementById("cityErrorMsg").innerText = "";
     }
-    if (
-        document.getElementById("email").value == "" ||
-        !emailRegex.test(document.getElementById("email").value)
-    ) {
+    if (!isEmailValid()) {
         document.getElementById("emailErrorMsg").innerText =
         "Veuillez entrer votre email! sous format : xxx@xx.xx";
         valid = false;
     } else {
         document.getElementById("cityErrorMsg").innerText = "";
     }
-return valid;
+    return valid;
 }
+
 //---------------------------------------------
 
 //------------------------------- fonction qui verifie qui si les données ont bien été saisies ==> page de confirmation
@@ -317,14 +349,14 @@ function submit(event) {
             headers: {
                 Accept: "application/json", //definit le format en Json
                 "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
+            },
+            body: JSON.stringify(body),
         })
         .then((response) => response.json())
         .then((data) => {
             window.location.replace(`./confirmation.html?orderId=${data.orderId}`);
         })
         .catch((error) => alert("Erreur : " + error));
-}
+    }
 }
 //-----------------------------------
